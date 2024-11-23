@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Điện Tử</title>
+    <link rel="stylesheet" href="C:\Users\TDT\Desktop\Web final\web.css">
+    <script>
+        // Hàm để hiển thị phần tương ứng
+        function showSection(sectionId) {
+            // Ẩn tất cả các phần
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            // Hiển thị phần được chọn
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Hiển thị mặc định trang chủ khi tải trang
+        window.onload = function() {
+            showSection('home');
+        };
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Báo Điện Tử</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Trang Chủ</a></li>
+                    <li><a href="#" onclick="showSection('category')">Chuyên Mục</a></li>
+                    <li><a href="#" onclick="showSection('article')">Chi Tiết Bài Viết</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Trang chủ -->
+    <div id="home" class="section">
+        <h2>Trang Chủ</h2>
+        <p>Đây là nội dung của trang chủ.</p>
+        <div class="featured">
+            <h3>Bài viết nổi bật</h3>
+            <p>Bài viết nổi bật 1</p>
+            <p>Bài viết nổi bật 2</p>
+        </div>
+        <div class="popular">
+            <h3>Bài viết được xem nhiều</h3>
+            <ul>
+                <li>Bài viết 1</li>
+                <li>Bài viết 2</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Danh sách bài viết theo chuyên mục -->
+    <div id="category" class="section" style="display: none;">
+        <h2>Chuyên Mục: Kinh Doanh</h2>
+        <div class="article-list">
+            <article>
+                <h3>Bài viết 1</h3>
+                <p>Tóm tắt bài viết...</p>
+            </article>
+            <article>
+                <h3>Bài viết 2</h3>
+                <p>Tóm tắt bài viết...</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Chi tiết bài viết -->
+    <div id="article" class="section" style="display: none;">
+        <h2>Chi Tiết Bài Viết</h2>
+        <article>
+            <h3>Tiêu đề bài viết</h3>
+            <p>Nội dung đầy đủ của bài viết...</p>
+        </article>
+        <div class="comments">
+            <h4>Bình luận</h4>
+            <p>Độc giả 1: Bình luận...</p>
+            <p>Độc giả 2: Bình luận...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Báo Điện Tử. All rights reserved.</p>
+    </footer>
+</body>
+</html>
