@@ -161,6 +161,7 @@
                 </div>
                 <button type="submit">Gửi</button>
             </form>
+            
         </section>
         
     </footer>
@@ -334,11 +335,6 @@ app.get('/download/:postId', (req, res) => {
         }
 
         // Kiểm tra quyền truy cập người dùng (có tài khoản và còn thời gian)
-        if (/* kiểm tra tài khoản hợp lệ */) {
-            res.download('/path/to/pdf-file.pdf');
-        } else {
-            res.send("Bạn cần có tài khoản premium để tải bài viết này.");
-        }
     });
 });
 
@@ -397,9 +393,117 @@ app.get('/download/:postId', (req, res) => {
             <input type="email" id="email" name="email" required><br>
         
             <button type="submit">Gia hạn tài khoản</button>
-        </form>
-        
+        </form>  
     </div>
+    <form id="article-form" method="POST" action="/submit-article" enctype="multipart/form-data">
+        <label for="title">Tiêu đề:</label>
+        <input type="text" id="title" name="title" required>
+    
+        <label for="summary">Tóm tắt:</label>
+        <textarea id="summary" name="summary" rows="3" required></textarea>
+    
+        <label for="content">Nội dung:</label>
+        <textarea id="content" name="content" required></textarea>
+    
+        <label for="category">Chuyên mục:</label>
+        <select id="category" name="category" required>
+            <option value="kinh-doanh">Kinh Doanh</option>
+            <option value="giao-duc">Giáo Dục</option>
+            <option value="suc-khoe">Sức Khỏe</option>
+            <!-- Thêm các chuyên mục khác -->
+        </select>
+    
+        <label for="tags">Nhãn (cách nhau bằng dấu phẩy):</label>
+        <input type="text" id="tags" name="tags">
+    
+        <label for="image">Hình ảnh:</label>
+        <input type="file" id="image" name="image">
+    
+        <label for="youtube">Link YouTube:</label>
+        <input type="url" id="youtube" name="youtube">
+    
+        <button type="submit">Đăng bài</button>
+    </form>
+    <div>
+        <button onclick="filterArticles('pending')">Chờ duyệt</button>
+        <button onclick="filterArticles('approved')">Đã xuất bản</button>
+        <button onclick="filterArticles('rejected')">Bị từ chối</button>
+        <button onclick="filterArticles('draft')">Chưa duyệt</button>
+    </div>
+    
+    <div id="article-list">
+        <!-- Danh sách bài viết sẽ được hiển thị ở đây -->
+    </div>
+    <form id="edit-article-form" method="POST" action="/edit-article" enctype="multipart/form-data">
+        <input type="hidden" id="article-id" name="article-id">
+    
+        <label for="edit-title">Tiêu đề:</label>
+        <input type="text" id="edit-title" name="title" required>
+    
+        <label for="edit-summary">Tóm tắt:</label>
+        <textarea id="edit-summary" name="summary" rows="3" required></textarea>
+    
+        <label for="edit-content">Nội dung:</label>
+        <textarea id="edit-content" name="content" required></textarea>
+    
+        <label for="edit-category">Chuyên mục:</label>
+        <select id="edit-category" name="category" required>
+            <option value="kinh-doanh">Kinh Doanh</option>
+            <option value="giao-duc">Giáo Dục</option>
+            <option value="suc-khoe">Sức Khỏe</option>
+        </select>
+    
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+    
+    <script>
+        function editArticle(articleId) {
+            // Lấy thông tin bài viết qua API
+            fetch(`/get-article?id=${articleId}`)
+                .then(response => response.json())
+                .then(article => {
+                    document.getElementById('article-id').value = article.id;
+                    document.getElementById('edit-title').value = article.title;
+                    document.getElementById('edit-summary').value = article.summary;
+                    CKEDITOR.instances['edit-content'].setData(article.content);
+                    document.getElementById('edit-category').value = article.category;
+                });
+    
+            // Hiển thị form chỉnh sửa (ví dụ sử dụng modal)
+            document.getElementById('edit-article-form').style.display = 'block';
+        }
+    </script>
+    
+    <script>
+        function filterArticles(status) {
+            fetch(`/get-articles?status=${status}`)
+                .then(response => response.json())
+                .then(data => {
+                    const articleList = document.getElementById('article-list');
+                    articleList.innerHTML = '';
+                    data.forEach(article => {
+                        articleList.innerHTML += `
+                            <div class="article">
+                                <h3>${article.title}</h3>
+                                <p>${article.summary}</p>
+                                <span>Chuyên mục: ${article.category}</span>
+                                <span>Trạng thái: ${article.status}</span>
+                                ${article.status === 'rejected' || article.status === 'draft' ? 
+                                    `<button onclick="editArticle(${article.id})">Sửa</button>` 
+                                    : ''}
+                            </div>
+                        `;
+                    });
+                });
+        }
+    </script>
+    
+    <!-- CKEditor -->
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('content');
+    </script>
+    
 </div>
 
 
