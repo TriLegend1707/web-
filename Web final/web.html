@@ -5,88 +5,276 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo Điện Tử</title>
     <link rel="stylesheet" href="C:\Users\TDT\Desktop\Web final\web.css">
-    <script>
-        // Hàm để hiển thị phần tương ứng
-        function showSection(sectionId) {
-            // Ẩn tất cả các phần
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
-            });
-            // Hiển thị phần được chọn
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        // Hiển thị mặc định trang chủ khi tải trang
-        window.onload = function() {
-            showSection('home');
-        };
-    </script>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <h1>Báo Điện Tử</h1>
-            <nav>
-                <ul>
-                    <li><a href="#" onclick="showSection('home')">Trang Chủ</a></li>
-                    <li><a href="#" onclick="showSection('category')">Chuyên Mục</a></li>
-                    <li><a href="#" onclick="showSection('article')">Chi Tiết Bài Viết</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Trang chủ -->
-    <div id="home" class="section">
-        <h2>Trang Chủ</h2>
-        <p>Đây là nội dung của trang chủ.</p>
-        <div class="featured">
-            <h3>Bài viết nổi bật</h3>
-            <p>Bài viết nổi bật 1</p>
-            <p>Bài viết nổi bật 2</p>
-        </div>
-        <div class="popular">
-            <h3>Bài viết được xem nhiều</h3>
+        <nav class="main-menu">
             <ul>
-                <li>Bài viết 1</li>
-                <li>Bài viết 2</li>
+                <li><a href="/">Trang Chủ</a></li>
+                <li><a href="/category/kinh-doanh">Kinh Doanh</a>
+                    <ul class="submenu">
+                        <li><a href="/category/kinh-doanh/nong-san">Nông Sản</a></li>
+                        <li><a href="/category/kinh-doanh/hai-san">Hải Sản</a></li>
+                    </ul>
+                </li>
+                <li><a href="/category/cong-nghe">Công Nghệ</a></li>
+                <li><a href="/search">Tìm Kiếm</a></li>
             </ul>
+        </nav>
+    </header>
+    <form action="/search" method="GET" id="search-form">
+        <input type="text" name="query" placeholder="Tìm kiếm bài viết..." required>
+        <button type="submit">Tìm Kiếm</button>
+    </form>
+    
+    <!-- Slideshow -->
+    <section class="slideshow">
+        <div class="slide">
+            <img src="featured1.jpg" alt="Bài Viết Nổi Bật">
+            <h2>Tiêu đề bài viết nổi bật</h2>
         </div>
-    </div>
-
-    <!-- Danh sách bài viết theo chuyên mục -->
-    <div id="category" class="section" style="display: none;">
-        <h2>Chuyên Mục: Kinh Doanh</h2>
-        <div class="article-list">
-            <article>
-                <h3>Bài viết 1</h3>
-                <p>Tóm tắt bài viết...</p>
-            </article>
-            <article>
-                <h3>Bài viết 2</h3>
-                <p>Tóm tắt bài viết...</p>
-            </article>
+        <div class="slide">
+            <img src="featured2.jpg" alt="Bài Viết Nổi Bật">
+            <h2>Tiêu đề bài viết nổi bật</h2>
         </div>
-    </div>
-
-    <!-- Chi tiết bài viết -->
-    <div id="article" class="section" style="display: none;">
-        <h2>Chi Tiết Bài Viết</h2>
+    </section>
+    <section>
+        <h1>Bài viết nổi bật</h1>
         <article>
-            <h3>Tiêu đề bài viết</h3>
-            <p>Nội dung đầy đủ của bài viết...</p>
+            <h2>Ngành Hải Sản Đang Phát Triển</h2>
+            <p>Chuyên mục: <a href="kinh-doanh.html">Kinh Doanh</a> ➠ <a href="hai-san.html">Hải Sản</a></p>
+            <p>Ngày đăng: <time datetime="2024-11-25">25/11/2024</time></p>
+            <img src="seafood.jpg" alt="Hình ảnh Hải sản" />
+            <p>Ngành hải sản đã đạt mức tăng trưởng ấn tượng trong năm nay với các chính sách mới hỗ trợ ngư dân...</p>
+            <a href="chi-tiet-bai-viet.html">Đọc thêm</a>
         </article>
-        <div class="comments">
-            <h4>Bình luận</h4>
-            <p>Độc giả 1: Bình luận...</p>
-            <p>Độc giả 2: Bình luận...</p>
+        <section id="comment-section">
+            <h3>Đăng Bình Luận</h3>
+            <form action="/submit-comment" method="POST">
+                <div>
+                    <label for="name">Tên của bạn:</label>
+                    <input type="text" id="name" name="name" required placeholder="Nhập tên của bạn">
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Nhập email của bạn">
+                </div>
+                <div>
+                    <label for="comment">Bình luận:</label>
+                    <textarea id="comment" name="comment" rows="5" required placeholder="Nhập nội dung bình luận"></textarea>
+                </div>
+                <button type="submit">Gửi Bình Luận</button>
+            </form>
+        </section>
+        
+        <article>
+            <h2>Xuất Khẩu Nông Sản Việt Nam Tăng Mạnh</h2>
+            <p>Chuyên mục: <a href="kinh-doanh.html">Kinh Doanh</a> ➠ <a href="nong-san.html">Nông Sản</a></p>
+            <p>Ngày đăng: <time datetime="2024-11-24">24/11/2024</time></p>
+            <img src="agriculture.jpg" alt="Hình ảnh Nông sản" />
+            <p>Nông sản Việt Nam đang khẳng định vị thế trên thị trường quốc tế với kim ngạch xuất khẩu đạt kỷ lục...</p>
+            <a href="chi-tiet-bai-viet.html">Đọc thêm</a>
+        </article>
+    </section>
+    <section id="comment-section">
+        <h3>Đăng Bình Luận</h3>
+        <form action="/submit-comment" method="POST">
+            <div>
+                <label for="name">Tên của bạn:</label>
+                <input type="text" id="name" name="name" required placeholder="Nhập tên của bạn">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Nhập email của bạn">
+            </div>
+            <div>
+                <label for="comment">Bình luận:</label>
+                <textarea id="comment" name="comment" rows="5" required placeholder="Nhập nội dung bình luận"></textarea>
+            </div>
+            <button type="submit">Gửi Bình Luận</button>
+        </form>
+    </section>
+    
+<section>
+    <h1>Bài viết nổi bật</h1>
+    <article class="article-item">
+        <h2>Ngành Hải Sản Đang Phát Triển</h2>
+        <p>Chuyên mục: <a href="#">Kinh Doanh</a> ➠ <a href="#">Hải Sản</a></p>
+        <p>Ngày đăng: <time datetime="2024-11-25">25/11/2024</time></p>
+        <img src="seafood.jpg" alt="Hình ảnh Hải sản" />
+        <p>Ngành hải sản đã đạt mức tăng trưởng ấn tượng trong năm nay...</p>
+        <a href="#" class="read-more">Đọc thêm</a>
+    </article>
+</section>
+
+    <!-- Top Articles -->
+    <section class="top-articles">
+        <h3>10 Bài Viết Được Xem Nhiều Nhất</h3>
+        <ul>
+            <li>
+                <img src="thumb1.jpg" alt="Bài Viết">
+                <a href="/article/1">Tiêu đề bài viết</a>
+                <p>Chuyên mục: <a href="/category/kinh-doanh">Kinh Doanh</a></p>
+            </li>
+            <!-- Các bài viết khác -->
+        </ul>
+    </section>
+
+    <!-- Latest Articles -->
+    <section class="latest-articles">
+        <h3>10 Bài Viết Mới Nhất</h3>
+        <ul>
+            <!-- Bài viết -->
+        </ul>
+    </section>
+
+    <!-- Top Categories -->
+    <section class="top-categories">
+        <h3>Top 10 Chuyên Mục</h3>
+        <div class="category-grid">
+            <div class="category-item">
+                <h4>Kinh Doanh</h4>
+                <a href="/article/1"><img src="thumb1.jpg" alt="Bài Viết"></a>
+                <p>Tiêu đề bài viết</p>
+            </div>
+            <!-- Các chuyên mục khác -->
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Báo Điện Tử. All rights reserved.</p>
+        <p>&copy; 2024 Báo Điện Tử</p>
+        <section id="contact-section">
+            <h2>Liên Hệ Với Chúng Tôi</h2>
+            <form action="/contact" method="POST">
+                <div>
+                    <label for="name">Tên của bạn:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                    <label for="message">Lời nhắn:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit">Gửi</button>
+            </form>
+        </section>
+        
     </footer>
+    <form id="register-form">
+        <label for="username">Tên đăng nhập:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Đăng Ký</button>
+    </form>
+    <script>
+        let slides = document.querySelectorAll(".slideshow .slide");
+let index = 0;
+
+function showSlide() {
+    slides.forEach((slide, i) => {
+        slide.style.display = i === index ? "block" : "none";
+    });
+    index = (index + 1) % slides.length;
+}
+
+setInterval(showSlide, 5000);
+document.querySelectorAll('.read-more').forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+        alert('Chuyển đến chi tiết bài viết!');
+        window.location.href = event.target.href;
+    });
+});
+// Lấy các thành phần
+const loginModal = document.getElementById('login-modal');
+const openLoginModalButton = document.getElementById('open-login-modal');
+const closeLoginModalButton = loginModal.querySelector('.close');
+
+// Mở modal đăng nhập
+openLoginModalButton.addEventListener('click', () => {
+    loginModal.style.display = 'block';
+});
+
+// Đóng modal đăng nhập
+closeLoginModalButton.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+
+// Đóng modal khi bấm ra ngoài
+window.addEventListener('click', (event) => {
+    if (event.target === loginModal) {
+        loginModal.style.display = 'none';
+    }
+});
+document.querySelector('#comment-section form').addEventListener('submit', function(e) {
+    const name = document.getElementById('name').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+
+    if (!name || !comment) {
+        alert('Vui lòng điền đầy đủ thông tin.');
+        e.preventDefault(); // Ngăn chặn gửi form
+    }
+});
+document.querySelector('#register-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Lấy dữ liệu từ form
+    const formData = new FormData(event.target);
+
+    // Gửi yêu cầu đến backend
+    const response = await fetch('/register', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.text();
+    alert(result); // Hiển thị phản hồi từ backend
+});
+app.post('/register', (req, res) => {
+    const { username, email, password } = req.body;
+    res.send(`Người dùng ${username} đã được đăng ký!`);
+});
+
+    </script>
+    <!-- Nút mở form đăng nhập -->
+<!-- Nút mở form đăng ký -->
+<button id="open-register-modal">Đăng Ký</button>
+
+<!-- Modal đăng ký -->
+<div id="register-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Đăng Ký Thành Viên</h2>
+        <form action="/register" method="POST">
+            <div>
+                <label for="username">Tên đăng nhập:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="confirm-password">Nhập lại mật khẩu:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <button type="submit">Đăng Ký</button>
+        </form>
+    </div>
+</div>
+
+
 </body>
 </html>
